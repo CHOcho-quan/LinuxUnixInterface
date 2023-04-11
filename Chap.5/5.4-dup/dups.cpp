@@ -1,5 +1,5 @@
 /**
- * Open a file using O_APPEND and set SEEK to see where it's gonna write
+ * Implement dup & dup2 using fcntl built-in function
  */
 
 #include <stdio.h>
