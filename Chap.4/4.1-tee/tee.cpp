@@ -8,6 +8,8 @@
 #include <iostream>
 #include <sys/stat.h>
 
+#include "file_helper.hpp"
+
 extern int optind,opterr,optopt;
 extern char *optarg;
 
@@ -58,16 +60,11 @@ int main(int argc, char* argv[]) {
   // Now read terminal for output
   char buff;
   while (read(STDIN_FILENO, &buff, 1) > 0) {
-    if (write(fd, &buff, 1) < 0) {
-      std::cerr << "Runtime Error: Failed to Write to File\n";
-      exit(1);
-    }
+    CHECK_FILE_OP_STATUS(write(fd, &buff, 1))
   }
 
   // close file
-  if (close(fd) < 0) {
-    std::cerr << "Runtime Error: Failed to Close File\n";
-    exit(1);
-  }
+  CHECK_FILE_OP_STATUS(close(fd))
+
   exit(0);
 }

@@ -5,9 +5,11 @@
 #include <string>
 #include <stdio.h>
 #include <fcntl.h>
+#include <errno.h>
 #include <unistd.h>
-#include <iostream>
 #include <sys/stat.h>
+
+#include "file_helper.hpp"
 
 int main(int argc, char* argv[]) {
   /**
@@ -37,21 +39,13 @@ int main(int argc, char* argv[]) {
   while (read(in_fd, &buff, 1) > 0) {
     // sparse file case on empty string
     if (buff == 0) {
-      if(lseek(out_fd, 1, SEEK_CUR) == -1){
-        std::cerr << "Runtime Error: Failed to copy sparse file\n";
-        exit(1);
-      }
+      CHECK_FILE_OP_STATUS(lseek(out_fd, 1, SEEK_CUR))
     }
-    if (write(out_fd, &buff, 1) < 0) {
-      std::cerr << "Runtime Error: Failed to Write to File\n";
-      exit(1);
-    }
+    CHECK_FILE_OP_STATUS(write(out_fd, &buff, 1))
   }
 
   // close files
-  if (close(in_fd) < 0 || close(out_fd) < 0) {
-    std::cerr << "Runtime Error: Failed to close file\n";
-    exit(1);
-  }
+  CHECK_FILE_OP_STATUS(close(in_fd) < 0 || close(out_fd) < 0)
+
   exit(0);
 }
