@@ -10,9 +10,6 @@
 
 #include "file_helper.hpp"
 
-extern int optind,opterr,optopt;
-extern char *optarg;
-
 int dup(int fd) {
   int new_fd = fcntl(fd, F_DUPFD, 0);
   if (new_fd < 0) {
