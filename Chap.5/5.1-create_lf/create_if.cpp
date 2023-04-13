@@ -8,7 +8,7 @@
 #include <iostream>
 #include <sys/stat.h>
 
-#include "file_helper.hpp"
+#include "sys_helper.hpp"
 
 #ifdef _FILE_OFFSET_BITS
   #define OFF_T off64_t
@@ -35,10 +35,10 @@ int main(int argc, char* argv[]) {
   }
 
   off = atoll(argv[2]);
-  CHECK_FILE_OP_STATUS(LSEEK(fd, off, SEEK_SET))
+  CHECK_SYS_OP_STATUS(LSEEK(fd, off, SEEK_SET))
 
-  CHECK_FILE_OP_STATUS(write(fd, "test", 4))
+  CHECK_SYS_OP_STATUS(write(fd, "test", 4))
 
-  CHECK_FILE_OP_STATUS(close(fd));
+  CHECK_SYS_OP_STATUS(close(fd));
   exit(0);
 }

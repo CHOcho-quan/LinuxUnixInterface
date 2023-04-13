@@ -8,7 +8,7 @@
 #include <iostream>
 #include <sys/stat.h>
 
-#include "file_helper.hpp"
+#include "sys_helper.hpp"
 
 int main(int argc, char* argv[]) {
   /**
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
   }
 
   // Move seek offset by one file
-  CHECK_FILE_OP_STATUS(lseek(fd, 1, SEEK_CUR));
+  CHECK_SYS_OP_STATUS(lseek(fd, 1, SEEK_CUR));
   if (lseek(fd, 0, SEEK_CUR) != lseek(dup_fd, 0, SEEK_CUR)) {
     std::cerr << "Really? Duplicated fd doesn't share Offset!\n";
     return -1;
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
   // write(fd1, "HELLO,", 6);
   // write(fd3, "Gidday,", 6);
 
-  CHECK_FILE_OP_STATUS(close(fd));
+  CHECK_SYS_OP_STATUS(close(fd));
 
   std::cout << "Duplicated fd share offset & flags\n";
   return 0;

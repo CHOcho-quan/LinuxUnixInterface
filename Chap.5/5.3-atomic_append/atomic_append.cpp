@@ -8,7 +8,7 @@
 #include <iostream>
 #include <sys/stat.h>
 
-#include "file_helper.hpp"
+#include "sys_helper.hpp"
 
 enum {
   APPEND_IT,
@@ -38,11 +38,11 @@ int main(int argc, char* argv[]) {
     fd = open(argv[1], O_RDWR | O_CREAT | O_APPEND, 0666);
   }
 
-  CHECK_FILE_OP_STATUS(fd);
+  CHECK_SYS_OP_STATUS(fd);
   for (int i = 0; i < num_bytes; ++i) {
-    if (mode == NO_APPEND) CHECK_FILE_OP_STATUS(lseek(fd, 0, SEEK_END));
-    CHECK_FILE_OP_STATUS(write(fd, &buff, sizeof(char)));
+    if (mode == NO_APPEND) CHECK_SYS_OP_STATUS(lseek(fd, 0, SEEK_END));
+    CHECK_SYS_OP_STATUS(write(fd, &buff, sizeof(char)));
   }
 
-  CHECK_FILE_OP_STATUS(close(fd));
+  CHECK_SYS_OP_STATUS(close(fd));
 }

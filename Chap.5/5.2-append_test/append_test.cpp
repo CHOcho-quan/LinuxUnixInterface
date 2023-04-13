@@ -8,7 +8,7 @@
 #include <iostream>
 #include <sys/stat.h>
 
-#include "file_helper.hpp"
+#include "sys_helper.hpp"
 
 int main(int argc, char* argv[]) {
   /**
@@ -29,11 +29,11 @@ int main(int argc, char* argv[]) {
   }
 
   // set seek at the start
-  CHECK_FILE_OP_STATUS(lseek(fd, 0, SEEK_SET))
+  CHECK_SYS_OP_STATUS(lseek(fd, 0, SEEK_SET))
 
   // write some random buff -> still gonna write at the end
-  char* buff = "quan";
-  CHECK_FILE_OP_STATUS(write(fd, buff, 4 * sizeof(char)))
+  const char* buff = "quan";
+  CHECK_SYS_OP_STATUS(write(fd, buff, 4 * sizeof(char)))
 
-  CHECK_FILE_OP_STATUS(close(fd))
+  CHECK_SYS_OP_STATUS(close(fd))
 }

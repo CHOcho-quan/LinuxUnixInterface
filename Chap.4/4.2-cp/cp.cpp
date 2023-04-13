@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-#include "file_helper.hpp"
+#include "sys_helper.hpp"
 
 int main(int argc, char* argv[]) {
   /**
@@ -39,13 +39,13 @@ int main(int argc, char* argv[]) {
   while (read(in_fd, &buff, 1) > 0) {
     // sparse file case on empty string
     if (buff == 0) {
-      CHECK_FILE_OP_STATUS(lseek(out_fd, 1, SEEK_CUR))
+      CHECK_SYS_OP_STATUS(lseek(out_fd, 1, SEEK_CUR))
     }
-    CHECK_FILE_OP_STATUS(write(out_fd, &buff, 1))
+    CHECK_SYS_OP_STATUS(write(out_fd, &buff, 1))
   }
 
   // close files
-  CHECK_FILE_OP_STATUS(close(in_fd) < 0 || close(out_fd) < 0)
+  CHECK_SYS_OP_STATUS(close(in_fd) < 0 || close(out_fd) < 0)
 
   exit(0);
 }

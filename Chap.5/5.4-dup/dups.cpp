@@ -8,7 +8,7 @@
 #include <iostream>
 #include <sys/stat.h>
 
-#include "file_helper.hpp"
+#include "sys_helper.hpp"
 
 int dup(int fd) {
   int new_fd = fcntl(fd, F_DUPFD, 0);
@@ -21,11 +21,11 @@ int dup(int fd) {
 
 int dup2(int old_fd, int new_fd) {
   if (old_fd == new_fd) {
-    CHECK_FILE_OP_STATUS(fcntl(old_fd, F_GETFL));
+    CHECK_SYS_OP_STATUS(fcntl(old_fd, F_GETFL));
     return new_fd;
   }
   close(new_fd); // need not to check because it may not be opened
-  CHECK_FILE_OP_STATUS(fcntl(old_fd, F_DUPFD, new_fd));
+  CHECK_SYS_OP_STATUS(fcntl(old_fd, F_DUPFD, new_fd));
   return new_fd;
 }
 
@@ -44,9 +44,9 @@ int main(int argc, char* argv[]) {
   const char* buff = "CHECK BUFF\n";
   fd = open(filepath, O_RDWR | O_CREAT | O_TRUNC, 0666);
   int dup_fd = dup(fd);
-  CHECK_FILE_OP_STATUS(write(dup_fd, buff, 11 * sizeof(char)));
+  CHECK_SYS_OP_STATUS(write(dup_fd, buff, 11 * sizeof(char)));
   dup2(fd, new_fd);
-  CHECK_FILE_OP_STATUS(write(new_fd, buff, 11 * sizeof(char)));
-  CHECK_FILE_OP_STATUS(close(fd));
-  CHECK_FILE_OP_STATUS(close(new_fd));
+  CHECK_SYS_OP_STATUS(write(new_fd, buff, 11 * sizeof(char)));
+  CHECK_SYS_OP_STATUS(close(fd));
+  CHECK_SYS_OP_STATUS(close(new_fd));
 }

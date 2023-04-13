@@ -4,9 +4,9 @@
 #include <iostream>
 
 /**
- * Check a file operation function is doing well
+ * Check a system operation function is doing well
  */
-#define CHECK_FILE_OP_STATUS(func)              \
+#define CHECK_SYS_OP_STATUS(func)              \
   if ((func) < 0) {                             \
     std::cerr << "Runtime Error due to "        \
              << strerror(errno) << '\n';        \

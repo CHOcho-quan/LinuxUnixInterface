@@ -8,7 +8,7 @@
 #include <iostream>
 #include <sys/stat.h>
 
-#include "file_helper.hpp"
+#include "sys_helper.hpp"
 
 extern int optind,opterr,optopt;
 extern char *optarg;
@@ -60,11 +60,11 @@ int main(int argc, char* argv[]) {
   // Now read terminal for output
   char buff;
   while (read(STDIN_FILENO, &buff, 1) > 0) {
-    CHECK_FILE_OP_STATUS(write(fd, &buff, 1))
+    CHECK_SYS_OP_STATUS(write(fd, &buff, 1))
   }
 
   // close file
-  CHECK_FILE_OP_STATUS(close(fd))
+  CHECK_SYS_OP_STATUS(close(fd))
 
   exit(0);
 }
