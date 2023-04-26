@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
   printf("Message from Main thread\n");
   struct boring bored;
   bored.a = 10;
-  
+
   pthread_t thr;
   CHECK_SYS_OP_STATUS(pthread_create(&thr, nullptr, threadFunc, (void*)&bored));
   printf("Everything in main thread finished\n");
